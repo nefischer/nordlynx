@@ -1,2 +1,2 @@
-Bubuntux: https://github.com/sponsors/bubuntux
+Bubuntux: https://github.com/sponsors/nefischer
 WireGuard: https://www.wireguard.com/donations/

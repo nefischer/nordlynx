@@ -4,7 +4,7 @@ ip link del dev test 2>/dev/null
 if ip link add dev test type wireguard; then
   ip link del dev test
 else
-  echo "[$(date -Iseconds)] The wireguard module is not active, try \`docker run --rm --cap-add=NET_ADMIN --cap-add=SYS_MODULE -v /lib/modules:/lib/modules bubuntux/install-wireguard\` to install it or follow the proper instructions from https://www.wireguard.com/install/ to manually install it."
+  echo "[$(date -Iseconds)] The wireguard module is not active, try \`docker run --rm --cap-add=NET_ADMIN --cap-add=SYS_MODULE -v /lib/modules:/lib/modules nefischer/install-wireguard\` to install it or follow the proper instructions from https://www.wireguard.com/install/ to manually install it."
   sleep infinity
 fi
 
@@ -14,6 +14,6 @@ if ! iptables -L > /dev/null 2>&1; then
 fi
 
 if [[ -z ${PRIVATE_KEY} ]] && [[ -z ${PRIVATE_KEY_FILE} ]] ; then
-  echo "[$(date -Iseconds)] Missing PRIVATE_KEY, and, PRIVATE_KEY_FILE, try \`docker run --rm --cap-add=NET_ADMIN -e TOKEN=XXX bubuntux/nordvpn:get_private_key\` with access token or follow this instructions https://forum.openwrt.org/t/instruction-config-nordvpn-wireguard-nordlynx-on-openwrt/89976 to obtain the private key."
+  echo "[$(date -Iseconds)] Missing PRIVATE_KEY, and, PRIVATE_KEY_FILE, try \`docker run --rm --cap-add=NET_ADMIN -e TOKEN=XXX nefischer/nordvpn:get_private_key\` with access token or follow this instructions https://forum.openwrt.org/t/instruction-config-nordvpn-wireguard-nordlynx-on-openwrt/89976 to obtain the private key."
   sleep infinity
 fi
