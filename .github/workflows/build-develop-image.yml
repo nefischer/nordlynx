@@ -19,7 +19,7 @@ jobs:
         id: meta
         run: |
           tags="ghcr.io/${{ github.repository }}:develop"
-          echo "::set-output name=tags::${tags}"
+          echo "tags=${tags}" >> $GITHUB_OUTPUT
 
       - name: Checkout repository
         uses: actions/checkout@v4
