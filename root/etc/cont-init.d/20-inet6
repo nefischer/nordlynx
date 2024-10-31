@@ -1,5 +1,14 @@
 #!/usr/bin/with-contenv bash
 
+if [[ $(cat /proc/sys/net/ipv6/conf/all/disable_ipv6) == 1 ]]; then
+  echo "IPV6 is disabled. Dropping all IPV6 traffic"
+  ip6tables -F
+  ip6tables -P INPUT DROP
+  ip6tables -P FORWARD DROP
+  ip6tables -P OUTPUT DROP
+  exit
+fi
+
 network_found=false
 iface=${INTERFACE:-eth0}
 interfaces=($(ip link | awk -F': ' '$0 !~ "lo|wg|tun|tap|^[^0-9]"{print $2;getline}' | cut -d@ -f1))
@@ -44,6 +53,8 @@ ip6tables -t nat -A POSTROUTING -o wg+ -j MASQUERADE
 
 ip6tables -A OUTPUT -o "$iface" -p udp -m udp --dport 53 -j ACCEPT
 ip6tables -A OUTPUT -o "$iface" -p udp -m udp --dport 51820 -j ACCEPT
+
+
 while true; do
   ip6tables -A OUTPUT -o "$iface" -d api.nordvpn.com -p tcp --dport 443 -j ACCEPT\
     || {
