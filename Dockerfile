@@ -6,5 +6,6 @@ HEALTHCHECK CMD [ $(( $(date -u +%s) - $(wg show wg0 latest-handshakes | awk '{p
 COPY /root /
 RUN apk add --no-cache -U iptables wireguard-tools curl jq patch && \
 	patch --verbose -d / -p 0 -i /patch/wg-quick.patch && \
+	echo 'net.ipv6.conf.all.disable_ipv6 = 1' > /etc/sysctl.conf && \
     apk del --purge patch && \
 	rm -rf /tmp/* /patch
