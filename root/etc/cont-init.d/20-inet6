@@ -9,6 +9,7 @@ if [[ $(cat /proc/sys/net/ipv6/conf/all/disable_ipv6) == 1 ]]; then
   exit
 fi
 
+echo "IPV6 is enabled. Setting up firewall rules"
 network_found=false
 iface=${INTERFACE:-eth0}
 interfaces=($(ip link | awk -F': ' '$0 !~ "lo|wg|tun|tap|^[^0-9]"{print $2;getline}' | cut -d@ -f1))
